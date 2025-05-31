@@ -1,11 +1,8 @@
 pipeline {
-    agent {
-        docker {
-            image 'python:3.10'
-        }
+    agent any
     }
     environment {
-        REPO_URL = 'https://github.com/yinon46/devops.git'
+        REPO_URL = 'https://github.com/yinon46/devops/pythonAPP.git'
     }
     stages {
         stage('Welcome') {
@@ -18,22 +15,15 @@ pipeline {
                 sh 'python --version'
             }
         }
-        stage('Clone Repo') {
+        stage('Run app') {
             steps {
-                git branch: 'main', url: "${REPO_URL}"
+                sh 'python3 calculator.py'
             }
         }
         stage('Run Unit Tests') {
             steps {
-                sh 'python -m unittest discover .'
+                sh 'python3 test_calculator.py'
             }
-        }
-    }
-    post {
-        always {
-            mail to: 'yinon46levi@gmail.com',
-                 subject: "Build ${currentBuild.currentResult}: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]'",
-                 body: "Check Jenkins for details: ${env.BUILD_URL}"
         }
     }
 }
