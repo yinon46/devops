@@ -1,9 +1,5 @@
 pipeline {
     agent any
-    }
-    environment {
-        REPO_URL = 'https://github.com/yinon46/devops/pythonAPP.git'
-    }
     stages {
         stage('Welcome') {
             steps {
